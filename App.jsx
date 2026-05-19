@@ -306,7 +306,7 @@ export default function WorkoutChecklistApp() {
               </p>
 
               <h1 className="text-4xl font-black mt-1">
-                Treino do Rafa
+                Bora Treinar!!!
               </h1>
 
               <p className="text-zinc-400 mt-2">
