@@ -1,258 +1,417 @@
-export default function WorkoutChecklistApp() { const { useState, useEffect } = React;
+import React, { useState, useEffect } from "react";
 
-const today = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long' });
+export default function WorkoutChecklistApp() {
 
-// ===================== // BASE DE EXERCÍCIOS // ===================== const defaultLibrary = [ // PEITO { name: "Supino reto barra", muscle: "Peito" }, { name: "Supino reto halter", muscle: "Peito" }, { name: "Supino inclinado barra", muscle: "Peito" }, { name: "Supino inclinado halter", muscle: "Peito" }, { name: "Supino declinado", muscle: "Peito" }, { name: "Crucifixo reto", muscle: "Peito" }, { name: "Crucifixo inclinado", muscle: "Peito" }, { name: "Crucifixo máquina", muscle: "Peito" }, { name: "Crossover alto", muscle: "Peito" }, { name: "Crossover médio", muscle: "Peito" }, { name: "Crossover baixo", muscle: "Peito" }, { name: "Peck deck", muscle: "Peito" }, { name: "Flexão de braço", muscle: "Peito" }, { name: "Flexão inclinada", muscle: "Peito" }, { name: "Flexão declinada", muscle: "Peito" },
+  const today = new Date().toLocaleDateString("pt-BR", {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+  });
 
-// COSTAS
-{ name: "Puxada frontal aberta", muscle: "Costas" },
-{ name: "Puxada frontal fechada", muscle: "Costas" },
-{ name: "Barra fixa", muscle: "Costas" },
-{ name: "Barra fixa assistida", muscle: "Costas" },
-{ name: "Remada curvada barra", muscle: "Costas" },
-{ name: "Remada curvada halter", muscle: "Costas" },
-{ name: "Remada baixa", muscle: "Costas" },
-{ name: "Remada unilateral", muscle: "Costas" },
-{ name: "Remada máquina", muscle: "Costas" },
-{ name: "Pulldown", muscle: "Costas" },
-{ name: "Pullover halter", muscle: "Costas" },
-{ name: "Pullover máquina", muscle: "Costas" },
-{ name: "Encolhimento trapézio", muscle: "Costas" },
-{ name: "Levantamento terra", muscle: "Costas" },
+  // =========================
+  // BIBLIOTECA DE EXERCÍCIOS
+  // =========================
+  const defaultLibrary = [
 
-// PERNAS
-{ name: "Agachamento livre", muscle: "Pernas" },
-{ name: "Agachamento smith", muscle: "Pernas" },
-{ name: "Agachamento hack", muscle: "Pernas" },
-{ name: "Leg press 45°", muscle: "Pernas" },
-{ name: "Leg press horizontal", muscle: "Pernas" },
-{ name: "Cadeira extensora", muscle: "Pernas" },
-{ name: "Cadeira flexora", muscle: "Pernas" },
-{ name: "Mesa flexora", muscle: "Pernas" },
-{ name: "Stiff barra", muscle: "Pernas" },
-{ name: "Stiff halter", muscle: "Pernas" },
-{ name: "Afundo", muscle: "Pernas" },
-{ name: "Passada", muscle: "Pernas" },
-{ name: "Hip thrust", muscle: "Pernas" },
-{ name: "Abdução máquina", muscle: "Pernas" },
-{ name: "Panturrilha em pé", muscle: "Pernas" },
-{ name: "Panturrilha sentado", muscle: "Pernas" },
-{ name: "Panturrilha leg press", muscle: "Pernas" },
+    // PEITO
+    { name: "Supino reto barra", muscle: "Peito" },
+    { name: "Supino reto halter", muscle: "Peito" },
+    { name: "Supino inclinado barra", muscle: "Peito" },
+    { name: "Supino inclinado halter", muscle: "Peito" },
+    { name: "Crucifixo reto", muscle: "Peito" },
+    { name: "Crucifixo inclinado", muscle: "Peito" },
+    { name: "Peck deck", muscle: "Peito" },
+    { name: "Crossover", muscle: "Peito" },
 
-// OMBROS
-{ name: "Desenvolvimento barra", muscle: "Ombros" },
-{ name: "Desenvolvimento halter", muscle: "Ombros" },
-{ name: "Desenvolvimento máquina", muscle: "Ombros" },
-{ name: "Elevação lateral", muscle: "Ombros" },
-{ name: "Elevação frontal", muscle: "Ombros" },
-{ name: "Elevação posterior", muscle: "Ombros" },
-{ name: "Crucifixo inverso", muscle: "Ombros" },
-{ name: "Arnold press", muscle: "Ombros" },
+    // COSTAS
+    { name: "Puxada frontal aberta", muscle: "Costas" },
+    { name: "Puxada frontal fechada", muscle: "Costas" },
+    { name: "Barra fixa", muscle: "Costas" },
+    { name: "Remada baixa", muscle: "Costas" },
+    { name: "Remada curvada", muscle: "Costas" },
+    { name: "Pulldown", muscle: "Costas" },
 
-// BÍCEPS
-{ name: "Rosca direta barra", muscle: "Bíceps" },
-{ name: "Rosca direta W", muscle: "Bíceps" },
-{ name: "Rosca alternada", muscle: "Bíceps" },
-{ name: "Rosca martelo", muscle: "Bíceps" },
-{ name: "Rosca concentrada", muscle: "Bíceps" },
-{ name: "Rosca Scott", muscle: "Bíceps" },
-{ name: "Rosca no cabo", muscle: "Bíceps" },
+    // PERNAS
+    { name: "Agachamento livre", muscle: "Pernas" },
+    { name: "Leg press", muscle: "Pernas" },
+    { name: "Cadeira extensora", muscle: "Pernas" },
+    { name: "Mesa flexora", muscle: "Pernas" },
+    { name: "Stiff", muscle: "Pernas" },
+    { name: "Panturrilha em pé", muscle: "Pernas" },
 
-// TRÍCEPS
-{ name: "Tríceps pulley", muscle: "Tríceps" },
-{ name: "Tríceps corda", muscle: "Tríceps" },
-{ name: "Tríceps francês", muscle: "Tríceps" },
-{ name: "Tríceps testa", muscle: "Tríceps" },
-{ name: "Mergulho banco", muscle: "Tríceps" },
-{ name: "Mergulho paralela", muscle: "Tríceps" },
+    // OMBROS
+    { name: "Desenvolvimento halter", muscle: "Ombros" },
+    { name: "Elevação lateral", muscle: "Ombros" },
+    { name: "Elevação frontal", muscle: "Ombros" },
 
-// CORE
-{ name: "Abdominal supra", muscle: "Core" },
-{ name: "Abdominal infra", muscle: "Core" },
-{ name: "Abdominal oblíquo", muscle: "Core" },
-{ name: "Prancha", muscle: "Core" },
-{ name: "Prancha lateral", muscle: "Core" },
-{ name: "Elevação de pernas", muscle: "Core" },
-{ name: "Abdominal bicicleta", muscle: "Core" },
+    // BÍCEPS
+    { name: "Rosca direta", muscle: "Bíceps" },
+    { name: "Rosca alternada", muscle: "Bíceps" },
+    { name: "Rosca martelo", muscle: "Bíceps" },
 
-// CARDIO
-{ name: "Esteira corrida", muscle: "Cardio" },
-{ name: "Esteira caminhada inclinada", muscle: "Cardio" },
-{ name: "Bicicleta ergométrica", muscle: "Cardio" },
-{ name: "Escada (stair climber)", muscle: "Cardio" },
-{ name: "Pular corda", muscle: "Cardio" },
-{ name: "HIIT corrida", muscle: "Cardio" }
+    // TRÍCEPS
+    { name: "Tríceps pulley", muscle: "Tríceps" },
+    { name: "Tríceps corda", muscle: "Tríceps" },
+    { name: "Tríceps francês", muscle: "Tríceps" },
 
-];
+    // CORE
+    { name: "Prancha", muscle: "Core" },
+    { name: "Abdominal supra", muscle: "Core" },
+    { name: "Abdominal infra", muscle: "Core" },
 
-const defaultWorkouts = { "Treino A": [], "Treino B": [], "Treino C": [], "Treino D": [] };
+    // CARDIO
+    { name: "Esteira", muscle: "Cardio" },
+    { name: "Bicicleta", muscle: "Cardio" },
+    { name: "Escada", muscle: "Cardio" },
+  ];
 
-// ===================== // STATES // ===================== const [library, setLibrary] = useState(() => { const saved = localStorage.getItem("library_v5"); return saved ? JSON.parse(saved) : defaultLibrary; });
+  // =========================
+  // TREINOS
+  // =========================
+  const defaultWorkouts = {
+    "Treino A": [],
+    "Treino B": [],
+    "Treino C": [],
+    "Treino D": [],
+  };
 
-const [workouts, setWorkouts] = useState(() => { const saved = localStorage.getItem("workouts_v5"); return saved ? JSON.parse(saved) : defaultWorkouts; });
+  // =========================
+  // STATES
+  // =========================
+  const [library, setLibrary] = useState(() => {
+    const saved = localStorage.getItem("library");
+    return saved ? JSON.parse(saved) : defaultLibrary;
+  });
 
-const [checked, setChecked] = useState(() => { const saved = localStorage.getItem("checked_v5"); return saved ? JSON.parse(saved) : {}; });
+  const [workouts, setWorkouts] = useState(() => {
+    const saved = localStorage.getItem("workouts");
+    return saved ? JSON.parse(saved) : defaultWorkouts;
+  });
 
-const [selectedWorkout, setSelectedWorkout] = useState(Object.keys(defaultWorkouts)[0]); const [newExercise, setNewExercise] = useState("");
+  const [checked, setChecked] = useState(() => {
+    const saved = localStorage.getItem("checked");
+    return saved ? JSON.parse(saved) : {};
+  });
 
-// FILTRO + FAVORITOS const [filter, setFilter] = useState("Todos"); const [favorites, setFavorites] = useState(() => { const saved = localStorage.getItem("favorites_v5"); return saved ? JSON.parse(saved) : []; });
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem("favorites");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-// ===================== // SAVE // ===================== useEffect(() => { localStorage.setItem("library_v5", JSON.stringify(library)); }, [library]);
+  const [selectedWorkout, setSelectedWorkout] = useState("Treino A");
+  const [filter, setFilter] = useState("Todos");
+  const [newExercise, setNewExercise] = useState("");
 
-useEffect(() => { localStorage.setItem("workouts_v5", JSON.stringify(workouts)); }, [workouts]);
+  // =========================
+  // SAVE
+  // =========================
+  useEffect(() => {
+    localStorage.setItem("library", JSON.stringify(library));
+  }, [library]);
 
-useEffect(() => { localStorage.setItem("checked_v5", JSON.stringify(checked)); }, [checked]);
+  useEffect(() => {
+    localStorage.setItem("workouts", JSON.stringify(workouts));
+  }, [workouts]);
 
-useEffect(() => { localStorage.setItem("favorites_v5", JSON.stringify(favorites)); }, [favorites]);
+  useEffect(() => {
+    localStorage.setItem("checked", JSON.stringify(checked));
+  }, [checked]);
 
-// ===================== // FUNCTIONS // ===================== const toggleCheck = (id) => { setChecked((prev) => ({ ...prev, [id]: !prev[id] })); };
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
-const toggleFavorite = (name) => { setFavorites((prev) => prev.includes(name) ? prev.filter((f) => f !== name) : [...prev, name] ); };
+  // =========================
+  // FUNÇÕES
+  // =========================
+  const addExercise = () => {
+    if (!newExercise.trim()) return;
 
-const addExerciseToLibrary = () => { if (!newExercise.trim()) return; setLibrary((prev) => [...prev, { name: newExercise, muscle: "Livre" }]); setNewExercise(""); };
+    setLibrary([
+      ...library,
+      {
+        name: newExercise,
+        muscle: "Livre",
+      },
+    ]);
 
-const addToWorkout = (exercise) => { setWorkouts((prev) => ({ ...prev, [selectedWorkout]: [ ...prev[selectedWorkout], { id: Date.now() + Math.random(), name: exercise.name, sets: 3, reps: 12 } ] })); };
+    setNewExercise("");
+  };
 
-const removeFromWorkout = (id) => { setWorkouts((prev) => ({ ...prev, [selectedWorkout]: prev[selectedWorkout].filter((ex) => ex.id !== id) })); };
+  const addToWorkout = (exercise) => {
+    setWorkouts({
+      ...workouts,
+      [selectedWorkout]: [
+        ...workouts[selectedWorkout],
+        {
+          id: Date.now(),
+          name: exercise.name,
+          sets: 3,
+          reps: 12,
+        },
+      ],
+    });
+  };
 
-const updateExercise = (id, field, value) => { setWorkouts((prev) => ({ ...prev, [selectedWorkout]: prev[selectedWorkout].map((ex) => ex.id === id ? { ...ex, [field]: value } : ex ) })); };
+  const removeExercise = (id) => {
+    setWorkouts({
+      ...workouts,
+      [selectedWorkout]: workouts[selectedWorkout].filter(
+        (e) => e.id !== id
+      ),
+    });
+  };
 
-// ===================== // FILTERED LIBRARY // ===================== const filteredLibrary = library.filter((ex) => { if (filter === "Favoritos") return favorites.includes(ex.name); if (filter === "Todos") return true; return ex.muscle === filter; });
+  const updateExercise = (id, field, value) => {
+    setWorkouts({
+      ...workouts,
+      [selectedWorkout]: workouts[selectedWorkout].map((e) =>
+        e.id === id ? { ...e, [field]: value } : e
+      ),
+    });
+  };
 
-const muscles = ["Todos", "Favoritos", ...new Set(library.map((l) => l.muscle))];
+  const toggleCheck = (id) => {
+    setChecked({
+      ...checked,
+      [id]: !checked[id],
+    });
+  };
 
-const completedCount = workouts[selectedWorkout].filter( (ex) => checked[ex.id] ).length;
+  const toggleFavorite = (name) => {
+    if (favorites.includes(name)) {
+      setFavorites(favorites.filter((f) => f !== name));
+    } else {
+      setFavorites([...favorites, name]);
+    }
+  };
 
-const progress = workouts[selectedWorkout].length ? Math.round((completedCount / workouts[selectedWorkout].length) * 100) : 0;
+  // =========================
+  // FILTROS
+  // =========================
+  const muscles = [
+    "Todos",
+    "Favoritos",
+    ...new Set(library.map((e) => e.muscle)),
+  ];
 
-// ===================== // UI // ===================== return ( <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-white p-4 flex justify-center"> <div className="w-full max-w-md">
+  const filteredLibrary = library.filter((exercise) => {
+    if (filter === "Todos") return true;
 
-{/* HEADER */}
-    <div className="mb-4">
-      <p className="text-zinc-400 text-sm capitalize">{today}</p>
-      <h1 className="text-3xl font-black">Treino do Rafa</h1>
-      <div className="text-sm text-zinc-400">Progresso: {progress}%</div>
-    </div>
+    if (filter === "Favoritos") {
+      return favorites.includes(exercise.name);
+    }
 
-    {/* SELECT TREINO */}
-    <select
-      className="w-full p-3 rounded-xl bg-zinc-800 mb-3"
-      value={selectedWorkout}
-      onChange={(e) => setSelectedWorkout(e.target.value)}
-    >
-      {Object.keys(workouts).map((w) => (
-        <option key={w}>{w}</option>
-      ))}
-    </select>
+    return exercise.muscle === filter;
+  });
 
-    {/* FILTER */}
-    <div className="flex gap-2 overflow-auto mb-3">
-      {muscles.map((m) => (
-        <button
-          key={m}
-          onClick={() => setFilter(m)}
-          className={`px-3 py-1 rounded-xl text-sm whitespace-nowrap ${
-            filter === m ? "bg-green-500 text-black" : "bg-zinc-800"
-          }`}
+  // =========================
+  // PROGRESSO
+  // =========================
+  const completed =
+    workouts[selectedWorkout]?.filter((e) => checked[e.id]).length || 0;
+
+  const total = workouts[selectedWorkout]?.length || 0;
+
+  const progress = total
+    ? Math.round((completed / total) * 100)
+    : 0;
+
+  // =========================
+  // UI
+  // =========================
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black text-white p-4 flex justify-center">
+
+      <div className="w-full max-w-md">
+
+        {/* HEADER */}
+        <div className="mb-5">
+          <p className="text-zinc-400 capitalize text-sm">
+            {today}
+          </p>
+
+          <h1 className="text-3xl font-black">
+            Treino do Rafa
+          </h1>
+
+          <p className="text-zinc-400 text-sm mt-1">
+            Progresso: {progress}%
+          </p>
+        </div>
+
+        {/* SELECT TREINO */}
+        <select
+          value={selectedWorkout}
+          onChange={(e) => setSelectedWorkout(e.target.value)}
+          className="w-full p-3 rounded-xl bg-zinc-800 mb-4"
         >
-          {m}
-        </button>
-      ))}
-    </div>
+          {Object.keys(workouts).map((w) => (
+            <option key={w}>{w}</option>
+          ))}
+        </select>
 
-    {/* ADD EXERCISE */}
-    <div className="flex gap-2 mb-4">
-      <input
-        value={newExercise}
-        onChange={(e) => setNewExercise(e.target.value)}
-        placeholder="Novo exercício"
-        className="flex-1 p-3 rounded-xl bg-zinc-800"
-      />
-      <button
-        onClick={addExerciseToLibrary}
-        className="bg-green-500 text-black px-4 rounded-xl font-bold"
-      >
-        +
-      </button>
-    </div>
-
-    {/* LIBRARY */}
-    <div className="mb-5">
-      <p className="text-sm text-zinc-400 mb-2">Biblioteca</p>
-      <div className="space-y-2 max-h-40 overflow-auto">
-        {filteredLibrary.map((ex, i) => (
-          <div key={i} className="flex justify-between bg-zinc-800 p-2 rounded-xl">
-            <div>
-              <span className="block">{ex.name}</span>
-              <span className="text-xs text-zinc-400">{ex.muscle}</span>
-            </div>
-
-            <div className="flex gap-2 items-center">
-              <button
-                onClick={() => toggleFavorite(ex.name)}
-                className="text-yellow-400"
-              >
-                {favorites.includes(ex.name) ? "★" : "☆"}
-              </button>
-
-              <button
-                onClick={() => addToWorkout(ex)}
-                className="text-green-400"
-              >
-                +
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    {/* WORKOUT */}
-    <div className="space-y-3">
-      {workouts[selectedWorkout].map((ex) => (
-        <div key={ex.id} className="bg-zinc-800 p-3 rounded-xl space-y-2">
-          <div className="flex justify-between items-center">
+        {/* FILTROS */}
+        <div className="flex gap-2 overflow-auto mb-4">
+          {muscles.map((m) => (
             <button
-              onClick={() => toggleCheck(ex.id)}
-              className="text-left flex-1"
+              key={m}
+              onClick={() => setFilter(m)}
+              className={`px-3 py-1 rounded-xl whitespace-nowrap text-sm ${
+                filter === m
+                  ? "bg-green-500 text-black"
+                  : "bg-zinc-800"
+              }`}
             >
-              <div className={checked[ex.id] ? "line-through text-zinc-500" : ""}>
-                {ex.name}
+              {m}
+            </button>
+          ))}
+        </div>
+
+        {/* ADD EXERCÍCIO */}
+        <div className="flex gap-2 mb-4">
+          <input
+            value={newExercise}
+            onChange={(e) => setNewExercise(e.target.value)}
+            placeholder="Novo exercício"
+            className="flex-1 p-3 rounded-xl bg-zinc-800"
+          />
+
+          <button
+            onClick={addExercise}
+            className="bg-green-500 text-black px-4 rounded-xl font-bold"
+          >
+            +
+          </button>
+        </div>
+
+        {/* BIBLIOTECA */}
+        <div className="mb-5">
+
+          <p className="text-zinc-400 text-sm mb-2">
+            Biblioteca
+          </p>
+
+          <div className="space-y-2 max-h-60 overflow-auto">
+
+            {filteredLibrary.map((exercise, index) => (
+
+              <div
+                key={index}
+                className="bg-zinc-800 p-3 rounded-xl flex justify-between items-center"
+              >
+
+                <div>
+                  <div>{exercise.name}</div>
+
+                  <div className="text-xs text-zinc-400">
+                    {exercise.muscle}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 items-center">
+
+                  <button
+                    onClick={() =>
+                      toggleFavorite(exercise.name)
+                    }
+                    className="text-yellow-400 text-lg"
+                  >
+                    {favorites.includes(exercise.name)
+                      ? "★"
+                      : "☆"}
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      addToWorkout(exercise)
+                    }
+                    className="text-green-400 text-xl"
+                  >
+                    +
+                  </button>
+
+                </div>
               </div>
-            </button>
-
-            <button
-              onClick={() => removeFromWorkout(ex.id)}
-              className="text-red-400"
-            >
-              ✕
-            </button>
-          </div>
-
-          <div className="flex gap-2">
-            <input
-              type="number"
-              value={ex.sets}
-              onChange={(e) => updateExercise(ex.id, "sets", Number(e.target.value))}
-              className="w-1/2 p-2 rounded bg-zinc-900"
-            />
-
-            <input
-              type="number"
-              value={ex.reps}
-              onChange={(e) => updateExercise(ex.id, "reps", Number(e.target.value))}
-              className="w-1/2 p-2 rounded bg-zinc-900"
-            />
-          </div>
-
-          <div className="text-xs text-zinc-400">
-            {ex.sets}x{ex.reps}
+            ))}
           </div>
         </div>
-      ))}
+
+        {/* TREINO */}
+        <div className="space-y-3">
+
+          {workouts[selectedWorkout].map((exercise) => (
+
+            <div
+              key={exercise.id}
+              className="bg-zinc-800 p-3 rounded-xl"
+            >
+
+              <div className="flex justify-between items-center mb-2">
+
+                <button
+                  onClick={() =>
+                    toggleCheck(exercise.id)
+                  }
+                  className="text-left flex-1"
+                >
+                  <div
+                    className={
+                      checked[exercise.id]
+                        ? "line-through text-zinc-500"
+                        : ""
+                    }
+                  >
+                    {exercise.name}
+                  </div>
+                </button>
+
+                <button
+                  onClick={() =>
+                    removeExercise(exercise.id)
+                  }
+                  className="text-red-400"
+                >
+                  ✕
+                </button>
+
+              </div>
+
+              <div className="flex gap-2">
+
+                <input
+                  type="number"
+                  value={exercise.sets}
+                  onChange={(e) =>
+                    updateExercise(
+                      exercise.id,
+                      "sets",
+                      Number(e.target.value)
+                    )
+                  }
+                  className="w-1/2 p-2 rounded bg-zinc-900"
+                />
+
+                <input
+                  type="number"
+                  value={exercise.reps}
+                  onChange={(e) =>
+                    updateExercise(
+                      exercise.id,
+                      "reps",
+                      Number(e.target.value)
+                    )
+                  }
+                  className="w-1/2 p-2 rounded bg-zinc-900"
+                />
+
+              </div>
+
+            </div>
+          ))}
+        </div>
+
+      </div>
     </div>
-
-  </div>
-</div>
-
-); }
+  );
+     }
