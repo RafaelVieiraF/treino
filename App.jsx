@@ -18,133 +18,167 @@ export default function WorkoutChecklistApp() {
   });
 
   // =========================
-  // BIBLIOTECA
+  // BIBLIOTECA COMPLETA
   // =========================
   const defaultLibrary = [
 
     // PEITO
     { name: "Supino reto barra", muscle: "Peito" },
+    { name: "Supino reto halter", muscle: "Peito" },
+    { name: "Supino inclinado barra", muscle: "Peito" },
     { name: "Supino inclinado halter", muscle: "Peito" },
+    { name: "Supino declinado", muscle: "Peito" },
+    { name: "Supino máquina", muscle: "Peito" },
+    { name: "Chest press", muscle: "Peito" },
     { name: "Crucifixo reto", muscle: "Peito" },
+    { name: "Crucifixo inclinado", muscle: "Peito" },
+    { name: "Crucifixo declinado", muscle: "Peito" },
     { name: "Peck deck", muscle: "Peito" },
+    { name: "Crossover alto", muscle: "Peito" },
+    { name: "Crossover médio", muscle: "Peito" },
+    { name: "Crossover baixo", muscle: "Peito" },
+    { name: "Flexão", muscle: "Peito" },
+    { name: "Paralelas", muscle: "Peito" },
 
     // COSTAS
     { name: "Puxada frontal aberta", muscle: "Costas" },
-    { name: "Remada baixa", muscle: "Costas" },
+    { name: "Puxada frontal fechada", muscle: "Costas" },
+    { name: "Puxada neutra", muscle: "Costas" },
+    { name: "Pulldown", muscle: "Costas" },
     { name: "Barra fixa", muscle: "Costas" },
+    { name: "Remada baixa", muscle: "Costas" },
+    { name: "Remada curvada", muscle: "Costas" },
+    { name: "Remada unilateral", muscle: "Costas" },
+    { name: "Remada cavalinho", muscle: "Costas" },
+    { name: "Serrote", muscle: "Costas" },
+    { name: "Levantamento terra", muscle: "Costas" },
 
     // PERNAS
     { name: "Agachamento livre", muscle: "Pernas" },
-    { name: "Leg press", muscle: "Pernas" },
+    { name: "Agachamento frontal", muscle: "Pernas" },
+    { name: "Agachamento hack", muscle: "Pernas" },
+    { name: "Hack squat", muscle: "Pernas" },
+    { name: "Leg press 45", muscle: "Pernas" },
+    { name: "Leg press horizontal", muscle: "Pernas" },
+    { name: "Agachamento smith", muscle: "Pernas" },
+    { name: "Afundo", muscle: "Pernas" },
+    { name: "Passada", muscle: "Pernas" },
+    { name: "Bulgarian split squat", muscle: "Pernas" },
+    { name: "Cadeira extensora", muscle: "Pernas" },
     { name: "Mesa flexora", muscle: "Pernas" },
+    { name: "Flexora sentado", muscle: "Pernas" },
+    { name: "Stiff", muscle: "Pernas" },
+    { name: "Terra romeno", muscle: "Pernas" },
+    { name: "Agachamento sumô", muscle: "Pernas" },
+    { name: "Panturrilha sentado", muscle: "Pernas" },
+    { name: "Panturrilha em pé", muscle: "Pernas" },
+
+    // GLÚTEOS
+    { name: "Elevação pélvica", muscle: "Glúteos" },
+    { name: "Hip thrust", muscle: "Glúteos" },
+    { name: "Coice na polia", muscle: "Glúteos" },
+    { name: "Glúteo máquina", muscle: "Glúteos" },
+    { name: "Cadeira abdutora", muscle: "Glúteos" },
+    { name: "Cadeira adutora", muscle: "Glúteos" },
 
     // OMBROS
+    { name: "Desenvolvimento barra", muscle: "Ombros" },
     { name: "Desenvolvimento halter", muscle: "Ombros" },
+    { name: "Desenvolvimento máquina", muscle: "Ombros" },
+    { name: "Arnold press", muscle: "Ombros" },
     { name: "Elevação lateral", muscle: "Ombros" },
+    { name: "Elevação frontal", muscle: "Ombros" },
+    { name: "Crucifixo invertido", muscle: "Ombros" },
+    { name: "Face pull", muscle: "Ombros" },
+    { name: "Remada alta", muscle: "Ombros" },
 
     // BÍCEPS
     { name: "Rosca direta", muscle: "Bíceps" },
+    { name: "Rosca alternada", muscle: "Bíceps" },
     { name: "Rosca martelo", muscle: "Bíceps" },
+    { name: "Rosca concentrada", muscle: "Bíceps" },
+    { name: "Rosca Scott", muscle: "Bíceps" },
+    { name: "Rosca Scott máquina", muscle: "Bíceps" },
+    { name: "Rosca máquina", muscle: "Bíceps" },
 
     // TRÍCEPS
     { name: "Tríceps pulley", muscle: "Tríceps" },
     { name: "Tríceps corda", muscle: "Tríceps" },
+    { name: "Tríceps francês", muscle: "Tríceps" },
+    { name: "Tríceps francês barra V", muscle: "Tríceps" },
+    { name: "Tríceps testa", muscle: "Tríceps" },
+    { name: "Tríceps banco", muscle: "Tríceps" },
+    { name: "Tríceps unilateral", muscle: "Tríceps" },
 
     // CORE
     { name: "Prancha", muscle: "Core" },
+    { name: "Prancha lateral", muscle: "Core" },
     { name: "Abdominal supra", muscle: "Core" },
+    { name: "Abdominal infra", muscle: "Core" },
+    { name: "Abdominal oblíquo", muscle: "Core" },
+    { name: "Abdominal máquina", muscle: "Core" },
+    { name: "Elevação de pernas", muscle: "Core" },
 
     // CARDIO
-    { name: "Esteira", muscle: "Cardio" },
-    { name: "Bicicleta", muscle: "Cardio" },
+    { name: "Esteira caminhada", muscle: "Cardio" },
+    { name: "Esteira corrida", muscle: "Cardio" },
+    { name: "Bike ergométrica", muscle: "Cardio" },
+    { name: "Escada", muscle: "Cardio" },
+    { name: "Elíptico", muscle: "Cardio" },
+    { name: "Remo", muscle: "Cardio" },
+    { name: "HIIT", muscle: "Cardio" },
+
   ];
 
   // =========================
   // TREINOS PRONTOS
   // =========================
   const defaultWorkouts = {
+
     "Treino A - Peito e Tríceps": [
-      {
-        id: 1,
-        name: "Supino reto barra",
-        sets: 4,
-        reps: 10,
-      },
-      {
-        id: 2,
-        name: "Supino inclinado halter",
-        sets: 3,
-        reps: 12,
-      },
-      {
-        id: 3,
-        name: "Tríceps pulley",
-        sets: 3,
-        reps: 12,
-      },
+      { id: 1, name: "Supino reto barra", sets: 4, reps: 10 },
+      { id: 2, name: "Supino inclinado halter", sets: 4, reps: 12 },
+      { id: 3, name: "Crucifixo reto", sets: 3, reps: 12 },
+      { id: 4, name: "Crossover médio", sets: 3, reps: 15 },
+      { id: 5, name: "Peck deck", sets: 3, reps: 15 },
+      { id: 6, name: "Tríceps pulley", sets: 3, reps: 12 },
+      { id: 7, name: "Tríceps corda", sets: 3, reps: 15 },
+      { id: 8, name: "Tríceps francês barra V", sets: 3, reps: 12 },
+      { id: 9, name: "Esteira caminhada", sets: 1, reps: 20 },
     ],
 
     "Treino B - Costas e Bíceps": [
-      {
-        id: 4,
-        name: "Puxada frontal aberta",
-        sets: 4,
-        reps: 10,
-      },
-      {
-        id: 5,
-        name: "Remada baixa",
-        sets: 3,
-        reps: 12,
-      },
-      {
-        id: 6,
-        name: "Rosca direta",
-        sets: 3,
-        reps: 12,
-      },
+      { id: 10, name: "Puxada frontal aberta", sets: 4, reps: 10 },
+      { id: 11, name: "Remada baixa", sets: 4, reps: 12 },
+      { id: 12, name: "Remada cavalinho", sets: 3, reps: 12 },
+      { id: 13, name: "Pulldown", sets: 3, reps: 15 },
+      { id: 14, name: "Rosca direta", sets: 3, reps: 12 },
+      { id: 15, name: "Rosca martelo", sets: 3, reps: 12 },
+      { id: 16, name: "Rosca máquina", sets: 3, reps: 15 },
+      { id: 17, name: "Bike ergométrica", sets: 1, reps: 15 },
     ],
 
     "Treino C - Pernas": [
-      {
-        id: 7,
-        name: "Agachamento livre",
-        sets: 4,
-        reps: 10,
-      },
-      {
-        id: 8,
-        name: "Leg press",
-        sets: 4,
-        reps: 12,
-      },
-      {
-        id: 9,
-        name: "Mesa flexora",
-        sets: 3,
-        reps: 12,
-      },
+      { id: 18, name: "Agachamento livre", sets: 4, reps: 10 },
+      { id: 19, name: "Agachamento hack", sets: 4, reps: 12 },
+      { id: 20, name: "Leg press 45", sets: 4, reps: 12 },
+      { id: 21, name: "Cadeira extensora", sets: 3, reps: 15 },
+      { id: 22, name: "Mesa flexora", sets: 3, reps: 12 },
+      { id: 23, name: "Cadeira abdutora", sets: 3, reps: 15 },
+      { id: 24, name: "Cadeira adutora", sets: 3, reps: 15 },
+      { id: 25, name: "Panturrilha em pé", sets: 4, reps: 20 },
+      { id: 26, name: "Escada", sets: 1, reps: 15 },
     ],
 
     "Treino D - Ombros e Core": [
-      {
-        id: 10,
-        name: "Desenvolvimento halter",
-        sets: 4,
-        reps: 10,
-      },
-      {
-        id: 11,
-        name: "Elevação lateral",
-        sets: 3,
-        reps: 15,
-      },
-      {
-        id: 12,
-        name: "Prancha",
-        sets: 3,
-        reps: 60,
-      },
+      { id: 27, name: "Desenvolvimento halter", sets: 4, reps: 10 },
+      { id: 28, name: "Elevação lateral", sets: 4, reps: 15 },
+      { id: 29, name: "Elevação frontal", sets: 3, reps: 12 },
+      { id: 30, name: "Face pull", sets: 3, reps: 15 },
+      { id: 31, name: "Prancha", sets: 3, reps: 60 },
+      { id: 32, name: "Abdominal supra", sets: 3, reps: 20 },
+      { id: 33, name: "Abdominal infra", sets: 3, reps: 20 },
+      { id: 34, name: "HIIT", sets: 1, reps: 12 },
     ],
   };
 
@@ -161,10 +195,7 @@ export default function WorkoutChecklistApp() {
     return saved ? JSON.parse(saved) : defaultWorkouts;
   });
 
-  const [checked, setChecked] = useState(() => {
-    const saved = localStorage.getItem("checked");
-    return saved ? JSON.parse(saved) : {};
-  });
+  const [checked, setChecked] = useState({});
 
   const [filter, setFilter] = useState("Todos");
 
@@ -178,10 +209,6 @@ export default function WorkoutChecklistApp() {
   useEffect(() => {
     localStorage.setItem("workouts", JSON.stringify(workouts));
   }, [workouts]);
-
-  useEffect(() => {
-    localStorage.setItem("checked", JSON.stringify(checked));
-  }, [checked]);
 
   // =========================
   // FUNÇÕES
@@ -384,7 +411,6 @@ export default function WorkoutChecklistApp() {
 
                   </div>
 
-                  {/* INPUTS */}
                   <div className="flex gap-2 mb-3">
 
                     <input
@@ -415,7 +441,6 @@ export default function WorkoutChecklistApp() {
 
                   </div>
 
-                  {/* BOTÃO CONCLUIR */}
                   <button
                     onClick={() => toggleCheck(exercise.id)}
                     className={`w-full p-3 rounded-2xl font-bold ${
