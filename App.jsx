@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 // ─── VERSÃO DA BIBLIOTECA ────────────────────────────────────────────────────
 // Aumente este número sempre que adicionar exercícios ao defaultLibrary
 // O app vai fazer merge automático sem apagar customizações do usuário
-const LIBRARY_VERSION = 2;
+const LIBRARY_VERSION = 3;
 
 // ─── BIBLIOTECA COMPLETA ─────────────────────────────────────────────────────
 const defaultLibrary = [
@@ -12,168 +12,159 @@ const defaultLibrary = [
   { name: "Supino reto halter", muscle: "Peito" },
   { name: "Supino inclinado barra", muscle: "Peito" },
   { name: "Supino inclinado halter", muscle: "Peito" },
-  { name: "Supino declinado", muscle: "Peito" },
+  { name: "Supino declinado barra", muscle: "Peito" },
   { name: "Supino declinado halter", muscle: "Peito" },
+  { name: "Supino fechado", muscle: "Peito" },
   { name: "Supino máquina", muscle: "Peito" },
-  { name: "Chest press", muscle: "Peito" },
-  { name: "Chest press inclinado", muscle: "Peito" },
+  { name: "Supino máquina inclinado", muscle: "Peito" },
   { name: "Crucifixo reto", muscle: "Peito" },
   { name: "Crucifixo inclinado", muscle: "Peito" },
   { name: "Crucifixo declinado", muscle: "Peito" },
+  { name: "Crucifixo máquina", muscle: "Peito" },
   { name: "Peck deck", muscle: "Peito" },
   { name: "Crossover alto", muscle: "Peito" },
   { name: "Crossover médio", muscle: "Peito" },
   { name: "Crossover baixo", muscle: "Peito" },
+  { name: "Pull over halter", muscle: "Peito" },
+  { name: "Pull over polia", muscle: "Peito" },
   { name: "Flexão", muscle: "Peito" },
-  { name: "Flexão diamante", muscle: "Peito" },
   { name: "Flexão inclinada", muscle: "Peito" },
   { name: "Paralelas", muscle: "Peito" },
-  { name: "Fly máquina", muscle: "Peito" },
 
   // COSTAS
   { name: "Puxada frontal aberta", muscle: "Costas" },
   { name: "Puxada frontal fechada", muscle: "Costas" },
   { name: "Puxada neutra", muscle: "Costas" },
-  { name: "Puxada pulley aberta", muscle: "Costas" },
-  { name: "Puxada pulley fechada", muscle: "Costas" },
-  { name: "Puxada com triângulo", muscle: "Costas" },
+  { name: "Puxada triângulo", muscle: "Costas" },
   { name: "Puxada articulada", muscle: "Costas" },
-  { name: "Pulley costas", muscle: "Costas" },
-  { name: "Pulldown", muscle: "Costas" },
-  { name: "Barra fixa", muscle: "Costas" },
-  { name: "Barra fixa supinada", muscle: "Costas" },
   { name: "Barra fixa pronada", muscle: "Costas" },
+  { name: "Barra fixa supinada", muscle: "Costas" },
   { name: "Barra fixa neutra", muscle: "Costas" },
-  { name: "Remada baixa", muscle: "Costas" },
-  { name: "Remada baixa triângulo", muscle: "Costas" },
   { name: "Remada baixa aberta", muscle: "Costas" },
-  { name: "Remada curvada", muscle: "Costas" },
+  { name: "Remada baixa triângulo", muscle: "Costas" },
+  { name: "Remada baixa corda", muscle: "Costas" },
+  { name: "Remada curvada barra", muscle: "Costas" },
   { name: "Remada curvada supinada", muscle: "Costas" },
-  { name: "Remada unilateral", muscle: "Costas" },
+  { name: "Remada unilateral halter", muscle: "Costas" },
+  { name: "Remada unilateral polia", muscle: "Costas" },
   { name: "Remada máquina", muscle: "Costas" },
   { name: "Remada articulada", muscle: "Costas" },
   { name: "Remada cavalinho", muscle: "Costas" },
   { name: "Serrote", muscle: "Costas" },
   { name: "Levantamento terra", muscle: "Costas" },
-  { name: "Rack pull", muscle: "Costas" },
-  { name: "Pull over polia", muscle: "Costas" },
-  { name: "Pull over halter", muscle: "Costas" },
-  { name: "Straight arm pulldown", muscle: "Costas" },
-  { name: "Good morning", muscle: "Costas" },
+  { name: "Terra romeno", muscle: "Costas" },
 
   // PERNAS
   { name: "Agachamento livre", muscle: "Pernas" },
   { name: "Agachamento frontal", muscle: "Pernas" },
-  { name: "Agachamento hack", muscle: "Pernas" },
   { name: "Agachamento sumô", muscle: "Pernas" },
-  { name: "Agachamento smith", muscle: "Pernas" },
-  { name: "Agachamento goblet", muscle: "Pernas" },
-  { name: "Hack squat", muscle: "Pernas" },
+  { name: "Agachamento no smith", muscle: "Pernas" },
+  { name: "Agachamento hack", muscle: "Pernas" },
   { name: "Leg press 45", muscle: "Pernas" },
   { name: "Leg press horizontal", muscle: "Pernas" },
-  { name: "Afundo", muscle: "Pernas" },
+  { name: "Afundo com halter", muscle: "Pernas" },
+  { name: "Afundo com barra", muscle: "Pernas" },
   { name: "Passada", muscle: "Pernas" },
-  { name: "Bulgarian split squat", muscle: "Pernas" },
+  { name: "Agachamento búlgaro", muscle: "Pernas" },
   { name: "Cadeira extensora", muscle: "Pernas" },
   { name: "Mesa flexora", muscle: "Pernas" },
   { name: "Flexora sentado", muscle: "Pernas" },
-  { name: "Flexora unilateral", muscle: "Pernas" },
-  { name: "Stiff", muscle: "Pernas" },
-  { name: "Terra romeno", muscle: "Pernas" },
+  { name: "Flexora deitado unilateral", muscle: "Pernas" },
+  { name: "Stiff barra", muscle: "Pernas" },
+  { name: "Stiff halter", muscle: "Pernas" },
   { name: "Panturrilha sentado", muscle: "Pernas" },
   { name: "Panturrilha em pé", muscle: "Pernas" },
   { name: "Panturrilha no leg press", muscle: "Pernas" },
-  { name: "Leg curl deitado", muscle: "Pernas" },
-  { name: "Abdução em pé polia", muscle: "Pernas" },
+  { name: "Abdução de quadril polia", muscle: "Pernas" },
 
   // GLÚTEOS
-  { name: "Hip thrust", muscle: "Glúteos" },
-  { name: "Hip thrust unilateral", muscle: "Glúteos" },
-  { name: "Elevação pélvica", muscle: "Glúteos" },
+  { name: "Hip thrust barra", muscle: "Glúteos" },
+  { name: "Hip thrust halter", muscle: "Glúteos" },
+  { name: "Hip thrust máquina", muscle: "Glúteos" },
+  { name: "Elevação pélvica no chão", muscle: "Glúteos" },
   { name: "Coice na polia", muscle: "Glúteos" },
+  { name: "Coice na polia joelho dobrado", muscle: "Glúteos" },
   { name: "Glúteo máquina", muscle: "Glúteos" },
   { name: "Cadeira abdutora", muscle: "Glúteos" },
   { name: "Cadeira adutora", muscle: "Glúteos" },
   { name: "Afundo reverso", muscle: "Glúteos" },
-  { name: "Step up", muscle: "Glúteos" },
-  { name: "Elevação de quadril no chão", muscle: "Glúteos" },
-  { name: "Glúteo 4 apoios polia", muscle: "Glúteos" },
+  { name: "Agachamento sumô com halter", muscle: "Glúteos" },
 
   // OMBROS
   { name: "Desenvolvimento barra", muscle: "Ombros" },
   { name: "Desenvolvimento halter", muscle: "Ombros" },
   { name: "Desenvolvimento máquina", muscle: "Ombros" },
-  { name: "Arnold press", muscle: "Ombros" },
-  { name: "Elevação lateral", muscle: "Ombros" },
+  { name: "Desenvolvimento Arnold", muscle: "Ombros" },
+  { name: "Elevação lateral halter", muscle: "Ombros" },
   { name: "Elevação lateral polia", muscle: "Ombros" },
   { name: "Elevação lateral máquina", muscle: "Ombros" },
-  { name: "Elevação frontal", muscle: "Ombros" },
+  { name: "Elevação frontal halter", muscle: "Ombros" },
   { name: "Elevação frontal barra", muscle: "Ombros" },
-  { name: "Crucifixo invertido", muscle: "Ombros" },
+  { name: "Elevação frontal polia", muscle: "Ombros" },
+  { name: "Crucifixo invertido halter", muscle: "Ombros" },
   { name: "Crucifixo invertido polia", muscle: "Ombros" },
-  { name: "Face pull", muscle: "Ombros" },
-  { name: "Remada alta", muscle: "Ombros" },
+  { name: "Crucifixo invertido máquina", muscle: "Ombros" },
+  { name: "Face pull corda", muscle: "Ombros" },
+  { name: "Remada alta barra", muscle: "Ombros" },
+  { name: "Remada alta halter", muscle: "Ombros" },
   { name: "Remada alta polia", muscle: "Ombros" },
-  { name: "Press militar", muscle: "Ombros" },
-  { name: "Cuban press", muscle: "Ombros" },
 
   // BÍCEPS
-  { name: "Rosca direta", muscle: "Bíceps" },
+  { name: "Rosca direta barra", muscle: "Bíceps" },
   { name: "Rosca direta barra W", muscle: "Bíceps" },
-  { name: "Rosca alternada", muscle: "Bíceps" },
-  { name: "Rosca martelo", muscle: "Bíceps" },
+  { name: "Rosca alternada halter", muscle: "Bíceps" },
+  { name: "Rosca martelo halter", muscle: "Bíceps" },
   { name: "Rosca martelo polia", muscle: "Bíceps" },
   { name: "Rosca concentrada", muscle: "Bíceps" },
-  { name: "Rosca Scott", muscle: "Bíceps" },
+  { name: "Rosca Scott barra", muscle: "Bíceps" },
+  { name: "Rosca Scott barra W", muscle: "Bíceps" },
   { name: "Rosca Scott máquina", muscle: "Bíceps" },
   { name: "Rosca máquina", muscle: "Bíceps" },
   { name: "Rosca polia alta", muscle: "Bíceps" },
   { name: "Rosca polia baixa", muscle: "Bíceps" },
-  { name: "Rosca 21", muscle: "Bíceps" },
-  { name: "Rosca inversa", muscle: "Bíceps" },
+  { name: "Rosca inversa barra", muscle: "Bíceps" },
+  { name: "Rosca 21 barra", muscle: "Bíceps" },
 
   // TRÍCEPS
-  { name: "Tríceps pulley", muscle: "Tríceps" },
-  { name: "Tríceps corda", muscle: "Tríceps" },
-  { name: "Tríceps francês", muscle: "Tríceps" },
+  { name: "Tríceps polia barra reta", muscle: "Tríceps" },
+  { name: "Tríceps polia barra V", muscle: "Tríceps" },
+  { name: "Tríceps polia corda", muscle: "Tríceps" },
+  { name: "Tríceps polia unilateral", muscle: "Tríceps" },
+  { name: "Tríceps francês barra", muscle: "Tríceps" },
   { name: "Tríceps francês barra W", muscle: "Tríceps" },
-  { name: "Tríceps testa", muscle: "Tríceps" },
+  { name: "Tríceps francês halter", muscle: "Tríceps" },
+  { name: "Tríceps francês unilateral", muscle: "Tríceps" },
+  { name: "Tríceps testa barra", muscle: "Tríceps" },
+  { name: "Tríceps testa barra W", muscle: "Tríceps" },
+  { name: "Tríceps testa halter", muscle: "Tríceps" },
+  { name: "Tríceps coice halter", muscle: "Tríceps" },
+  { name: "Tríceps coice polia", muscle: "Tríceps" },
   { name: "Tríceps banco", muscle: "Tríceps" },
-  { name: "Tríceps unilateral", muscle: "Tríceps" },
-  { name: "Tríceps unilateral polia", muscle: "Tríceps" },
   { name: "Tríceps máquina", muscle: "Tríceps" },
-  { name: "Tríceps coice", muscle: "Tríceps" },
-  { name: "Close grip bench press", muscle: "Tríceps" },
-  { name: "Skull crusher", muscle: "Tríceps" },
+  { name: "Supino fechado tríceps", muscle: "Tríceps" },
 
   // CORE
   { name: "Prancha", muscle: "Core" },
   { name: "Prancha lateral", muscle: "Core" },
-  { name: "Prancha RKC", muscle: "Core" },
   { name: "Abdominal supra", muscle: "Core" },
   { name: "Abdominal infra", muscle: "Core" },
   { name: "Abdominal oblíquo", muscle: "Core" },
   { name: "Abdominal máquina", muscle: "Core" },
-  { name: "Elevação de pernas", muscle: "Core" },
   { name: "Abdominal bicicleta", muscle: "Core" },
-  { name: "Dragon flag", muscle: "Core" },
-  { name: "Hollow body", muscle: "Core" },
-  { name: "Russian twist", muscle: "Core" },
-  { name: "Ab rollout", muscle: "Core" },
-  { name: "Dead bug", muscle: "Core" },
-  { name: "Mountain climber", muscle: "Core" },
+  { name: "Elevação de pernas suspenso", muscle: "Core" },
+  { name: "Elevação de pernas deitado", muscle: "Core" },
+  { name: "Roda abdominal", muscle: "Core" },
+  { name: "Torção russa", muscle: "Core" },
 
   // CARDIO
   { name: "Esteira caminhada", muscle: "Cardio" },
   { name: "Esteira corrida", muscle: "Cardio" },
   { name: "Bike ergométrica", muscle: "Cardio" },
-  { name: "Escada", muscle: "Cardio" },
+  { name: "Escada ergométrica", muscle: "Cardio" },
   { name: "Elíptico", muscle: "Cardio" },
   { name: "Remo ergométrico", muscle: "Cardio" },
-  { name: "HIIT", muscle: "Cardio" },
-  { name: "Jump rope", muscle: "Cardio" },
-  { name: "Burpee", muscle: "Cardio" },
-  { name: "Box jump", muscle: "Cardio" },
+  { name: "Pular corda", muscle: "Cardio" },
+  { name: "HIIT esteira", muscle: "Cardio" },
 ];
 
 // ─── TREINOS PADRÃO ──────────────────────────────────────────────────────────
@@ -699,7 +690,6 @@ export default function WorkoutApp() {
               {/* Treinos */}
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {Object.entries(workouts).map(([name, exercises]) => {
-                  // cor baseada no primeiro exercício
                   const firstMuscle =
                     exercises[0] &&
                     library.find((l) => l.name === exercises[0].name)?.muscle;
@@ -709,8 +699,25 @@ export default function WorkoutApp() {
                     <div
                       key={name}
                       className="card workout-card"
-                      style={{ "--accent": accent }}
+                      style={{
+                        "--accent": accent,
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "16px 14px 16px 24px",
+                        gap: 10,
+                      }}
                     >
+                      {/* Info */}
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 3 }}>
+                          {name}
+                        </div>
+                        <div style={{ fontSize: 12, color: "#555" }}>
+                          {exercises.length} exercício{exercises.length !== 1 ? "s" : ""}
+                        </div>
+                      </div>
+
+                      {/* Iniciar */}
                       <button
                         onClick={() => {
                           setActiveWorkout(name);
@@ -719,60 +726,45 @@ export default function WorkoutApp() {
                           setScreen("workout");
                         }}
                         style={{
-                          width: "100%",
-                          padding: "18px 18px 18px 24px",
-                          background: "transparent",
-                          border: "none",
-                          color: "#fff",
+                          background: accent + "18",
+                          border: `1px solid ${accent}44`,
+                          borderRadius: 10,
+                          padding: "7px 13px",
+                          fontSize: 12,
+                          fontWeight: 700,
+                          color: accent,
+                          whiteSpace: "nowrap",
                           cursor: "pointer",
-                          textAlign: "left",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
+                          flexShrink: 0,
                         }}
                       >
-                        <div>
-                          <div
-                            style={{ fontSize: 16, fontWeight: 700, marginBottom: 4 }}
-                          >
-                            {name}
-                          </div>
-                          <div style={{ fontSize: 13, color: "#666" }}>
-                            {exercises.length} exercício
-                            {exercises.length !== 1 ? "s" : ""}
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            background: accent + "22",
-                            border: `1px solid ${accent}44`,
-                            borderRadius: 10,
-                            padding: "6px 12px",
-                            fontSize: 12,
-                            fontWeight: 700,
-                            color: accent,
-                            whiteSpace: "nowrap",
-                          }}
-                        >
-                          Iniciar →
-                        </div>
+                        Iniciar →
                       </button>
-                      {/* delete treino */}
+
+                      {/* Lixeira */}
                       <button
                         onClick={() =>
                           setDeleteConfirm({ type: "workout", id: name, name })
                         }
                         style={{
-                          position: "absolute",
-                          right: 56,
-                          top: "50%",
-                          transform: "translateY(-50%)",
                           background: "transparent",
-                          border: "none",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: 10,
                           color: "#444",
                           cursor: "pointer",
-                          fontSize: 16,
-                          padding: 6,
+                          fontSize: 13,
+                          padding: "7px 9px",
+                          flexShrink: 0,
+                          lineHeight: 1,
+                          transition: "all 0.15s",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.color = "#ef4444";
+                          e.currentTarget.style.borderColor = "#ef444455";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.color = "#444";
+                          e.currentTarget.style.borderColor = "#2a2a2a";
                         }}
                       >
                         🗑
@@ -783,33 +775,32 @@ export default function WorkoutApp() {
               </div>
 
               {/* Novo treino */}
-              <div
-                style={{
-                  marginTop: 16,
-                  display: "flex",
-                  gap: 8,
-                  alignItems: "center",
-                }}
-              >
-                <input
-                  className="input"
-                  placeholder="Nome do novo treino..."
-                  value={newWorkoutName}
-                  onChange={(e) => setNewWorkoutName(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && createWorkout()}
-                />
-                <button
-                  className="btn-primary"
-                  onClick={createWorkout}
-                  style={{
-                    padding: "10px 18px",
-                    borderRadius: 12,
-                    flexShrink: 0,
-                    fontSize: 20,
-                  }}
-                >
-                  +
-                </button>
+              <div style={{ marginTop: 20 }}>
+                <p style={{ fontSize: 11, color: "#444", letterSpacing: "0.08em", fontWeight: 600, marginBottom: 10 }}>
+                  NOVO TREINO
+                </p>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <input
+                    className="input"
+                    placeholder="Ex: Treino E — Glúteos"
+                    value={newWorkoutName}
+                    onChange={(e) => setNewWorkoutName(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && createWorkout()}
+                  />
+                  <button
+                    className="btn-primary"
+                    onClick={createWorkout}
+                    style={{
+                      padding: "10px 18px",
+                      borderRadius: 12,
+                      flexShrink: 0,
+                      fontSize: 20,
+                      opacity: newWorkoutName.trim() ? 1 : 0.35,
+                    }}
+                  >
+                    +
+                  </button>
+                </div>
               </div>
 
               {/* Editar nome */}
@@ -819,7 +810,7 @@ export default function WorkoutApp() {
                   setNameInput(userName);
                   setShowNameModal(true);
                 }}
-                style={{ marginTop: 28, width: "100%" }}
+                style={{ marginTop: 16, width: "100%" }}
               >
                 ✏️ Editar meu nome
               </button>
