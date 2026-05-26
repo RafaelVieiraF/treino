@@ -388,6 +388,15 @@ export default function WorkoutApp() {
   };
 
   const finishWorkout = () => {
+    // Move o treino finalizado para o final da fila
+    setWorkouts((prev) => {
+      const entries = Object.entries(prev);
+      const idx = entries.findIndex(([name]) => name === activeWorkout);
+      if (idx === -1) return prev;
+      const moved = entries.splice(idx, 1)[0];
+      entries.push(moved);
+      return Object.fromEntries(entries);
+    });
     setChecked({});
     setCollapsed({});
     setScreen("home");
@@ -683,17 +692,21 @@ export default function WorkoutApp() {
                   !
                 </h1>
                 <p style={{ color: "#555", fontSize: 14, marginTop: 8 }}>
-                  Qual o treino de hoje?
+                  Sugerido hoje:{" "}
+                  <span style={{ color: "#22c55e", fontWeight: 600 }}>
+                    {Object.keys(workouts)[0] || "—"}
+                  </span>
                 </p>
               </div>
 
               {/* Treinos */}
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                {Object.entries(workouts).map(([name, exercises]) => {
+                {Object.entries(workouts).map(([name, exercises], index) => {
                   const firstMuscle =
                     exercises[0] &&
                     library.find((l) => l.name === exercises[0].name)?.muscle;
                   const accent = muscleColor[firstMuscle] || "#22c55e";
+                  const isNext = index === 0;
 
                   return (
                     <div
@@ -705,15 +718,35 @@ export default function WorkoutApp() {
                         alignItems: "center",
                         padding: "16px 14px 16px 24px",
                         gap: 10,
+                        ...(isNext && {
+                          border: "1px solid #22c55e33",
+                          background: "#111",
+                        }),
                       }}
                     >
                       {/* Info */}
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 3 }}>
+                        <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", marginBottom: 4 }}>
                           {name}
                         </div>
-                        <div style={{ fontSize: 12, color: "#555" }}>
-                          {exercises.length} exercício{exercises.length !== 1 ? "s" : ""}
+                        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                          <span style={{ fontSize: 12, color: "#555" }}>
+                            {exercises.length} exercício{exercises.length !== 1 ? "s" : ""}
+                          </span>
+                          {isNext && (
+                            <span style={{
+                              fontSize: 10,
+                              fontWeight: 700,
+                              color: "#22c55e",
+                              background: "#22c55e18",
+                              border: "1px solid #22c55e44",
+                              borderRadius: 6,
+                              padding: "2px 7px",
+                              letterSpacing: "0.06em",
+                            }}>
+                              HOJE
+                            </span>
+                          )}
                         </div>
                       </div>
 
