@@ -1014,24 +1014,27 @@ export default function WorkoutApp() {
                 <button
                   onClick={() => setScreen("home")}
                   style={{
-                    background: "transparent",
-                    border: "none",
-                    color: "#555",
+                    background: "#1e1e1e",
+                    border: "1px solid #2e2e2e",
+                    color: "#aaa",
                     cursor: "pointer",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    marginBottom: 16,
-                    padding: 0,
+                    fontSize: 12,
+                    fontWeight: 600,
+                    marginBottom: 20,
+                    padding: "7px 14px",
+                    borderRadius: 8,
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 6,
                     fontFamily: "'DM Sans', sans-serif",
-                    transition: "color 0.15s",
+                    transition: "all 0.15s",
+                    letterSpacing: "0.02em",
                   }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = "#fff"}
-                  onMouseLeave={(e) => e.currentTarget.style.color = "#555"}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#2a2a2a"; e.currentTarget.style.color = "#fff"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = "#1e1e1e"; e.currentTarget.style.color = "#aaa"; }}
                 >
-                  ← Voltar
+                  <span style={{ lineHeight: 1 }}>←</span>
+                  <span>Voltar</span>
                 </button>
 
                 <h1
@@ -1410,9 +1413,17 @@ export default function WorkoutApp() {
                       Adicionar exercício
                     </span>
                   </div>
-                  <span style={{ fontSize: 11, color: "#444" }}>
+                  <div style={{
+                    background: "#1e1e1e",
+                    border: "1px solid #2a2a2a",
+                    borderRadius: 8,
+                    color: "#666",
+                    fontSize: 12,
+                    padding: "5px 8px",
+                    lineHeight: 1,
+                  }}>
                     {showLibrary ? "▲" : "▼"}
-                  </span>
+                  </div>
                 </button>
 
                 {/* Conteúdo expansível */}
